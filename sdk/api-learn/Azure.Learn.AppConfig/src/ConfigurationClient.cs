@@ -24,9 +24,11 @@ namespace Azure.Learn.AppConfig
         /// Initializes a new instance of the <see cref="ConfigurationClient"/>.
         /// </summary>
 #pragma warning disable CA1801 // Parameter is never used
+
         public ConfigurationClient(Uri endpoint, TokenCredential credential, ConfigurationClientOptions options)
         {
         }
+
 #pragma warning restore CA1801 // Parameter is never used
 
         /// <summary>
@@ -48,6 +50,23 @@ namespace Azure.Learn.AppConfig
         /// Retrieve a <see cref="ConfigurationSetting"/> from the configuration store.
         /// </summary>
         public virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label = null, CancellationToken cancellationToken = default)
+        {
+            await Task.Yield();
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Conditionally retrieve a <see cref="ConfigurationSetting"/> from the configuration store if the setting has been changed since it was last retrieved.
+        /// </summary>
+        public virtual Response<ConfigurationSetting> GetConfigurationSetting(ConfigurationSetting setting, bool onlyIfChanged = false, CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Conditionally retrieve a <see cref="ConfigurationSetting"/> from the configuration store if the setting has been changed since it was last retrieved.
+        /// </summary>
+        public virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(ConfigurationSetting setting, bool onlyIfChanged = false, CancellationToken cancellationToken = default)
         {
             await Task.Yield();
             throw new NotImplementedException();
