@@ -9,6 +9,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE</DefineConstants>
+	<InheritDocEnabled>false</InheritDocEnabled>
   </PropertyGroup>
 
   <ItemGroup>
