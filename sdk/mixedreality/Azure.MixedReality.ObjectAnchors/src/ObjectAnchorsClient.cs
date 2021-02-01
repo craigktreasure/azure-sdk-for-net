@@ -3,10 +3,15 @@
 //   Copyright (c) Microsoft Corporation.  All rights reserved.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+using System;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.MixedReality.Authentication;
 using Azure.MixedReality.ObjectAnchors.Models;
+using Vector3 = System.Numerics.Vector3;
+using GeneratedVector3 = Azure.MixedReality.ObjectAnchors.Models.Vector3;
+using System.Threading.Tasks;
 
 namespace Azure.MixedReality.ObjectAnchors
 {
@@ -29,10 +34,10 @@ namespace Azure.MixedReality.ObjectAnchors
         /// Initializes a new instance of the <see cref="ObjectAnchorsClient" /> class.
         /// </summary>
         /// <param name="account">The Azure Object Anchors account details.</param>
-        /// <param name="accessToken">An access token used to access the specified Azure Object Anchors account.</param>
+        /// <param name="token">An access token used to access the specified Azure Object Anchors account.</param>
         /// <param name="options">The options.</param>
         public ObjectAnchorsClient(ObjectAnchorsAccount account, AccessToken token, ObjectAnchorsClientOptions? options = null)
-            : this(account, new StaticAccessTokenCredential(accessToken), options) { }
+            : this(account, new StaticAccessTokenCredential(token), options) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectAnchorsClient" /> class.
@@ -41,7 +46,7 @@ namespace Azure.MixedReality.ObjectAnchors
         /// <param name="keyCredential">The Azure Object Anchors account primary or secondary key credential.</param>
         /// <param name="options">The options.</param>
         public ObjectAnchorsClient(ObjectAnchorsAccount account, AzureKeyCredential keyCredential, ObjectAnchorsClientOptions? options = null)
-            : this(account, new MixedRealityAccountKeyCredential(account.AccountId, keyCredential), options) { }
+            : this(account, new MixedRealityAccountKeyCredential(account.AccountId.ToString(), keyCredential), options) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectAnchorsClient" /> class.
@@ -57,7 +62,7 @@ namespace Azure.MixedReality.ObjectAnchors
             options ??= new ObjectAnchorsClientOptions();
 
             Uri authenticationEndpoint = options.AuthenticationEndpoint ?? AuthenticationEndpoint.ConstructFromDomain(account.AccountDomain);
-            TokenCredential mrTokenCredential = MixedRealityTokenCredential.GetMixedRealityCredential(account.AccountId, authenticationEndpoint, credential);
+            TokenCredential mrTokenCredential = MixedRealityTokenCredential.GetMixedRealityCredential(account.AccountId.ToString(), authenticationEndpoint, credential);
             Uri serviceEndpoint = options.ServiceEndpoint ?? ConstructObjectAnchorsEndpointUrl(account.AccountDomain);
 
             _account = account;
@@ -79,55 +84,39 @@ namespace Azure.MixedReality.ObjectAnchors
         {
         }
 
-        public virtual Response<IngestionProperties> CreateIngestionJob(Guid accountId, Guid jobId, IngestionJobRequest ingestionJobRequest = null, CancellationToken cancellationToken = default)
+        public virtual void CreateJob(IngestionJobRequest request, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(anchorRequests, nameof(anchorRequests));
-
-            string requestCv = GenerateCv();
-            Guid jobId = Guid.NewGuid();
-
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(ObjectAnchorsClient)}.{nameof(CreateIngestionJob)}");
-            scope.AddAttribute(nameof(requestCv), requestCv);
-            scope.Start();
-
-            try
-            {
-                PropertiesRequestOptions requestOptions = new PropertiesRequestOptions
-                {
-                    ClientRequestId = requestCv
-                };
-
-                SpatialAnchorsPropertiesRequest request = new SpatialAnchorsPropertiesRequest(anchorRequests);
-
-                IngestionProperties props = new IngestionProperties();
-
-                return _ingestionJobRestClient.Create(accountId, jobId, requestCv);
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return _ingestionJobRestClient.Create(_account.AccountId, request.JobId);
         }
 
-        private static Uri ConstructObjectAnchorsEndpointUrl(string accountDomain)
-        {
-            Argument.AssertNotNullOrWhiteSpace(accountDomain, nameof(accountDomain));
+        public virtual async Task<> CreateJobAsync(IngestionJobRequest request, CancellationToken cancellationToken = default) { }
 
-            if (!Uri.TryCreate($"https://manage.sa.{accountDomain}", UriKind.Absolute, out Uri result))
-            {
-                throw new ArgumentException("The value could not be used to construct a valid endpoint.", nameof(accountDomain));
-            }
+        public virtual void GetJob(CancellationToken cancellationToken = default) { }
 
-            return result;
-        }
+        public virtual async Task<> GetJobAsync(CancellationToken cancellationToken = default) { }
 
-        public
+        public virtual void GetUploadUri(CancellationToken cancellationToken = default) { }
+
+        public virtual async Task<> GetUploadUriAsync(CancellationToken cancellationToken = default) { }
+
+        public virtual Response<IngestionProperties> GetIngestionJob(CancellationToken cancellationToken = default) { }
 
         private static string GetDefaultScope(Uri uri)
             => $"{uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped)}/.default";
 
         private static string GenerateCv()
             => Convert.ToBase64String(Guid.NewGuid().ToByteArray()).TrimEnd('=');
+
+        private static Uri ConstructObjectAnchorsEndpointUrl(string accountDomain)
+        {
+            Argument.AssertNotNullOrWhiteSpace(accountDomain, nameof(accountDomain));
+
+            if (!Uri.TryCreate($"https://{accountDomain}", UriKind.Absolute, out Uri result))
+            {
+                throw new ArgumentException("The value could not be used to construct a valid endpoint.", nameof(accountDomain));
+            }
+
+            return result;
+        }
     }
 }

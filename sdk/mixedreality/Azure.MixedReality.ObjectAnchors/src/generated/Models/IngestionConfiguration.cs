@@ -14,58 +14,36 @@ namespace Azure.MixedReality.ObjectAnchors.Models
     /// <summary> Represents an ingestion configuration. </summary>
     public partial class IngestionConfiguration
     {
-        /// <summary> Initializes a new instance of IngestionConfiguration. </summary>
-        /// <param name="gravity"> . </param>
-        /// <param name="scale"> Scale of transformation of asset units into meter space. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gravity"/> is null. </exception>
-        public IngestionConfiguration(Vector3 gravity, float scale)
-        {
-            if (gravity == null)
-            {
-                throw new ArgumentNullException(nameof(gravity));
-            }
-
-            Gravity = gravity;
-            KeyFrameIndexes = new ChangeTrackingList<int>();
-            GtTrajectory = new ChangeTrackingList<Pose>();
-            Scale = scale;
-            TestTrajectory = new ChangeTrackingList<Pose>();
-        }
 
         /// <summary> Initializes a new instance of IngestionConfiguration. </summary>
-        /// <param name="dimensions"> . </param>
-        /// <param name="boundingBoxCenter"> . </param>
-        /// <param name="gravity"> . </param>
+        /// <param name="generatedDimensions"> . </param>
+        /// <param name="generatedBoundingBoxCenter"> . </param>
+        /// <param name="generatedGravity"> . </param>
         /// <param name="keyFrameIndexes"> Indices of Key Frames. </param>
         /// <param name="gtTrajectory"> Ground truth trajectory. </param>
-        /// <param name="principalAxis"> . </param>
+        /// <param name="generatedPrincipalAxis"> . </param>
         /// <param name="scale"> Scale of transformation of asset units into meter space. </param>
-        /// <param name="supportingPlane"> . </param>
+        /// <param name="generatedSupportingPlane"> . </param>
         /// <param name="testTrajectory"> Test Trajectory. </param>
-        internal IngestionConfiguration(Vector3 dimensions, Vector3 boundingBoxCenter, Vector3 gravity, IList<int> keyFrameIndexes, IList<Pose> gtTrajectory, Quaternion principalAxis, float scale, Vector4 supportingPlane, IList<Pose> testTrajectory)
+        internal IngestionConfiguration(Vector3 generatedDimensions, Vector3 generatedBoundingBoxCenter, Vector3 generatedGravity, IList<int> keyFrameIndexes, IList<Pose> gtTrajectory, Quaternion generatedPrincipalAxis, float scale, Vector4 generatedSupportingPlane, IList<Pose> testTrajectory)
         {
-            Dimensions = dimensions;
-            BoundingBoxCenter = boundingBoxCenter;
-            Gravity = gravity;
+            GeneratedDimensions = generatedDimensions;
+            GeneratedBoundingBoxCenter = generatedBoundingBoxCenter;
+            GeneratedGravity = generatedGravity;
             KeyFrameIndexes = keyFrameIndexes;
             GtTrajectory = gtTrajectory;
-            PrincipalAxis = principalAxis;
+            GeneratedPrincipalAxis = generatedPrincipalAxis;
             Scale = scale;
-            SupportingPlane = supportingPlane;
+            GeneratedSupportingPlane = generatedSupportingPlane;
             TestTrajectory = testTrajectory;
         }
 
-        public Vector3 Dimensions { get; set; }
-        public Vector3 BoundingBoxCenter { get; set; }
-        public Vector3 Gravity { get; set; }
         /// <summary> Indices of Key Frames. </summary>
         public IList<int> KeyFrameIndexes { get; }
         /// <summary> Ground truth trajectory. </summary>
         public IList<Pose> GtTrajectory { get; }
-        public Quaternion PrincipalAxis { get; set; }
         /// <summary> Scale of transformation of asset units into meter space. </summary>
         public float Scale { get; set; }
-        public Vector4 SupportingPlane { get; set; }
         /// <summary> Test Trajectory. </summary>
         public IList<Pose> TestTrajectory { get; }
     }

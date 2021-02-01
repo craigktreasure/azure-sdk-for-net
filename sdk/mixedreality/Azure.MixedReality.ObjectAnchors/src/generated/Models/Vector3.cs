@@ -8,7 +8,7 @@
 namespace Azure.MixedReality.ObjectAnchors.Models
 {
     /// <summary> The Vector3. </summary>
-    public partial class Vector3
+    internal partial class Vector3
     {
         /// <summary> Initializes a new instance of Vector3. </summary>
         public Vector3()

@@ -16,18 +16,18 @@ namespace Azure.MixedReality.ObjectAnchors.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Dimensions))
+            if (Optional.IsDefined(GeneratedDimensions))
             {
                 writer.WritePropertyName("dimensions");
-                writer.WriteObjectValue(Dimensions);
+                writer.WriteObjectValue(GeneratedDimensions);
             }
-            if (Optional.IsDefined(BoundingBoxCenter))
+            if (Optional.IsDefined(GeneratedBoundingBoxCenter))
             {
                 writer.WritePropertyName("boundingBoxCenter");
-                writer.WriteObjectValue(BoundingBoxCenter);
+                writer.WriteObjectValue(GeneratedBoundingBoxCenter);
             }
             writer.WritePropertyName("gravity");
-            writer.WriteObjectValue(Gravity);
+            writer.WriteObjectValue(GeneratedGravity);
             if (Optional.IsCollectionDefined(KeyFrameIndexes))
             {
                 writer.WritePropertyName("keyFrameIndexes");
@@ -48,17 +48,17 @@ namespace Azure.MixedReality.ObjectAnchors.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(PrincipalAxis))
+            if (Optional.IsDefined(GeneratedPrincipalAxis))
             {
                 writer.WritePropertyName("principalAxis");
-                writer.WriteObjectValue(PrincipalAxis);
+                writer.WriteObjectValue(GeneratedPrincipalAxis);
             }
             writer.WritePropertyName("scale");
             writer.WriteNumberValue(Scale);
-            if (Optional.IsDefined(SupportingPlane))
+            if (Optional.IsDefined(GeneratedSupportingPlane))
             {
                 writer.WritePropertyName("supportingPlane");
-                writer.WriteObjectValue(SupportingPlane);
+                writer.WriteObjectValue(GeneratedSupportingPlane);
             }
             if (Optional.IsCollectionDefined(TestTrajectory))
             {

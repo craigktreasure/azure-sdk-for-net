@@ -15,16 +15,15 @@ namespace Azure.MixedReality.ObjectAnchors
         /// <summary>
         /// Gets the Azure Spatial Anchors account identifier.
         /// </summary>
-        public string AccountId { get; }
+        public Guid AccountId { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectAnchorsAccount"/> class.
         /// </summary>
         /// <param name="accountId">The Azure Object Anchors account identifier.</param>
         /// <param name="accountDomain">The Azure Object Anchors account domain.</param>
-        public ObjectAnchorsAccount(string accountId, string accountDomain)
+        public ObjectAnchorsAccount(Guid accountId, string accountDomain)
         {
-            Argument.AssertNotNullOrWhiteSpace(accountId, nameof(accountId));
             Argument.AssertNotNullOrWhiteSpace(accountDomain, nameof(accountDomain));
 
             AccountId = accountId;

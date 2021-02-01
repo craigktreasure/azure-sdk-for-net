@@ -8,31 +8,77 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using NumericsVector3 = System.Numerics.Vector3;
+using NumericsVector4 = System.Numerics.Vector4;
+using NumericsQuaternion = System.Numerics.Quaternion;
+using GeneratedVector3 = Azure.MixedReality.ObjectAnchors.Models.Vector3;
+using GeneratedVector4 = Azure.MixedReality.ObjectAnchors.Models.Vector4;
+using GeneratedQuaternion = Azure.MixedReality.ObjectAnchors.Models.Quaternion;
 
 namespace Azure.MixedReality.ObjectAnchors.Models
 {
     /// <summary> Represents an ingestion configuration. </summary>
     public partial class IngestionConfiguration
     {
+        private GeneratedVector3 _generatedDimensions = default;
+        private GeneratedVector3 _generatedBoundingBoxCenter = default;
+        private GeneratedVector3 _generatedGravity = default;
+        private GeneratedQuaternion _generatedPrincipalAxis = default;
+        private GeneratedVector4 _generatedSupportingPlane = default;
+        private NumericsVector3? _dimensions = null;
+        private NumericsVector3? _boundingBoxCenter = null;
+        private NumericsVector3 _gravity;
+        private NumericsQuaternion? _principalAxis = null;
+        private NumericsVector4? _supportingPlane = null;
+
+        /// <summary> Initializes a new instance of IngestionConfiguration. </summary>
+        /// <param name="gravity"> . </param>
+        /// <param name="scale"> Scale of transformation of asset units into meter space. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gravity"/> is null. </exception>
+        public IngestionConfiguration(NumericsVector3 gravity, float scale) : this(gravity.ToGeneratedVector3(), scale)
+        { }
+
+        /// <summary> Initializes a new instance of IngestionConfiguration. </summary>
+        /// <param name="generatedGravity"> . </param>
+        /// <param name="scale"> Scale of transformation of asset units into meter space. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="generatedGravity"/> is null. </exception>
+        internal IngestionConfiguration(GeneratedVector3 generatedGravity, float scale)
+        {
+            if (generatedGravity == null)
+            {
+                throw new ArgumentNullException(nameof(generatedGravity));
+            }
+
+            GeneratedGravity = generatedGravity;
+            KeyFrameIndexes = new ChangeTrackingList<int>();
+            GtTrajectory = new ChangeTrackingList<Pose>();
+            Scale = scale;
+            TestTrajectory = new ChangeTrackingList<Pose>();
+        }
+
+        public NumericsVector3? Dimensions { get { return _dimensions; } set { _dimensions = value; _generatedDimensions = (value.HasValue ? value.Value.ToGeneratedVector3() : null); } }
+
+        public NumericsVector3? BoundingBoxCenter { get { return _boundingBoxCenter; } set { _boundingBoxCenter = value; _generatedBoundingBoxCenter = (value.HasValue ? value.Value.ToGeneratedVector3() : null); } }
+
+        public NumericsVector3 Gravity { get { return _gravity; } set { _gravity = value; _generatedGravity = value.ToGeneratedVector3(); } }
+
+        public NumericsQuaternion? PrincipalAxis { get { return _principalAxis; } set { _principalAxis = value; _generatedPrincipalAxis = (value.HasValue ? value.Value.ToGeneratedQuaternion() : null); } }
+
+        public NumericsVector4? SupportingPlane { get { return _supportingPlane; } set { _supportingPlane = value; _generatedSupportingPlane = (value.HasValue ? value.Value.ToGeneratedVector4() : null); } }
+
         [CodeGenMember("Dimensions")]
-        internal Vector3 GeneratedDimensions { get; set; }
+        internal GeneratedVector3 GeneratedDimensions { get { return _generatedDimensions; } set { _generatedDimensions = value; _dimensions = value.ToGeneratedVector3(); } }
 
         [CodeGenMember("BoundingBoxCenter")]
-        internal Vector3 GeneratedBoundingBoxCenter { get; set; }
+        internal GeneratedVector3 GeneratedBoundingBoxCenter { get { return _generatedBoundingBoxCenter; } set { _generatedBoundingBoxCenter = value; _boundingBoxCenter = value.ToGeneratedVector3() } }
 
         [CodeGenMember("Gravity")]
-        internal Vector3 GeneratedGravity { get; set; }
-        /// <summary> Indices of Key Frames. </summary>
-        public IList<int> KeyFrameIndexes { get; }
-        /// <summary> Ground truth trajectory. </summary>
-        public IList<Pose> GtTrajectory { get; }
+        internal GeneratedVector3 GeneratedGravity { get { return _generatedGravity; } set { _generatedGravity = value; NumericsVector3? converted = value.ToGeneratedVector3(); if (converted.HasValue) { _gravity = converted.Value; } }  }
+
         [CodeGenMember("PrincipalAxis")]
-        internal Quaternion GeneratedPrincipalAxis { get; set; }
-        /// <summary> Scale of transformation of asset units into meter space. </summary>
-        public float Scale { get; set; }
+        internal GeneratedQuaternion GeneratedPrincipalAxis { get { return _generatedPrincipalAxis; } set { _generatedPrincipalAxis = value; _principalAxis = value.ToGeneratedQuaternion(); } }
+
         [CodeGenMember("SupportingPlane")]
-        internal Vector4 GeneratedSupportingPlane { get; set; }
-        /// <summary> Test Trajectory. </summary>
-        public IList<Pose> TestTrajectory { get; }
+        internal GeneratedVector4 GeneratedSupportingPlane { get { return _generatedSupportingPlane; } set { _generatedSupportingPlane = value; _supportingPlane = value.ToGeneratedVector4(); } }
     }
 }

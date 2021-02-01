@@ -8,7 +8,7 @@
 namespace Azure.MixedReality.ObjectAnchors.Models
 {
     /// <summary> The Vector4. </summary>
-    public partial class Vector4
+    internal partial class Vector4
     {
         /// <summary> Initializes a new instance of Vector4. </summary>
         public Vector4()
