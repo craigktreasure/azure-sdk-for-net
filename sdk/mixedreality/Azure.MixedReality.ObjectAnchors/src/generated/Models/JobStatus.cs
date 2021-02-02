@@ -5,56 +5,20 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.MixedReality.ObjectAnchors.Models
 {
     /// <summary> The JobStatus. </summary>
-    public readonly partial struct JobStatus : IEquatable<JobStatus>
+    public enum JobStatus
     {
-        private readonly string _value;
-
-        /// <summary> Determines if two <see cref="JobStatus"/> values are the same. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public JobStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string NotStartedValue = "NotStarted";
-        private const string RunningValue = "Running";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CancelledValue = "Cancelled";
-
         /// <summary> NotStarted. </summary>
-        public static JobStatus NotStarted { get; } = new JobStatus(NotStartedValue);
+        NotStarted,
         /// <summary> Running. </summary>
-        public static JobStatus Running { get; } = new JobStatus(RunningValue);
+        Running,
         /// <summary> Succeeded. </summary>
-        public static JobStatus Succeeded { get; } = new JobStatus(SucceededValue);
+        Succeeded,
         /// <summary> Failed. </summary>
-        public static JobStatus Failed { get; } = new JobStatus(FailedValue);
+        Failed,
         /// <summary> Cancelled. </summary>
-        public static JobStatus Cancelled { get; } = new JobStatus(CancelledValue);
-        /// <summary> Determines if two <see cref="JobStatus"/> values are the same. </summary>
-        public static bool operator ==(JobStatus left, JobStatus right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="JobStatus"/> values are not the same. </summary>
-        public static bool operator !=(JobStatus left, JobStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobStatus"/>. </summary>
-        public static implicit operator JobStatus(string value) => new JobStatus(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is JobStatus other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(JobStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        Cancelled
     }
 }

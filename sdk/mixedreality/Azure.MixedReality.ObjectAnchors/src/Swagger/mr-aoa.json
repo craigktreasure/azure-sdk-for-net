@@ -175,7 +175,11 @@
         "Failed",
         "Cancelled"
       ],
-      "type": "string"
+      "type": "string",
+      "x-ms-enum": {
+        "name": "JobStatus",
+        "modelAsString": false
+      }
     },
     "Vector3": {
       "type": "object",

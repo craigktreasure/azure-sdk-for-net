@@ -19,7 +19,7 @@ namespace Azure.MixedReality.ObjectAnchors.Models
             if (Optional.IsDefined(JobStatus))
             {
                 writer.WritePropertyName("jobStatus");
-                writer.WriteStringValue(JobStatus.Value.ToString());
+                writer.WriteStringValue(JobStatus.Value.ToSerialString());
             }
             if (Optional.IsDefined(AssetFileType))
             {
@@ -84,7 +84,7 @@ namespace Azure.MixedReality.ObjectAnchors.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jobStatus = new JobStatus(property.Value.GetString());
+                    jobStatus = property.Value.GetString().ToJobStatus();
                     continue;
                 }
                 if (property.NameEquals("assetFileType"))
