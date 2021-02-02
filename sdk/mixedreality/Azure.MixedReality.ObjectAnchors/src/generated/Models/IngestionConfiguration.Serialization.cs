@@ -16,18 +16,18 @@ namespace Azure.MixedReality.ObjectAnchors.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(GeneratedDimensions))
+            if (Optional.IsDefined(DimensionsWrapper))
             {
                 writer.WritePropertyName("dimensions");
-                writer.WriteObjectValue(GeneratedDimensions);
+                writer.WriteObjectValue(DimensionsWrapper);
             }
-            if (Optional.IsDefined(GeneratedBoundingBoxCenter))
+            if (Optional.IsDefined(BoundingBoxCenterWrapper))
             {
                 writer.WritePropertyName("boundingBoxCenter");
-                writer.WriteObjectValue(GeneratedBoundingBoxCenter);
+                writer.WriteObjectValue(BoundingBoxCenterWrapper);
             }
             writer.WritePropertyName("gravity");
-            writer.WriteObjectValue(GeneratedGravity);
+            writer.WriteObjectValue(GravityWrapper);
             if (Optional.IsCollectionDefined(KeyFrameIndexes))
             {
                 writer.WritePropertyName("keyFrameIndexes");
@@ -48,17 +48,17 @@ namespace Azure.MixedReality.ObjectAnchors.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(GeneratedPrincipalAxis))
+            if (Optional.IsDefined(PrincipalAxisWrapper))
             {
                 writer.WritePropertyName("principalAxis");
-                writer.WriteObjectValue(GeneratedPrincipalAxis);
+                writer.WriteObjectValue(PrincipalAxisWrapper);
             }
             writer.WritePropertyName("scale");
             writer.WriteNumberValue(Scale);
-            if (Optional.IsDefined(GeneratedSupportingPlane))
+            if (Optional.IsDefined(SupportingPlaneWrapper))
             {
                 writer.WritePropertyName("supportingPlane");
-                writer.WriteObjectValue(GeneratedSupportingPlane);
+                writer.WriteObjectValue(SupportingPlaneWrapper);
             }
             if (Optional.IsCollectionDefined(TestTrajectory))
             {

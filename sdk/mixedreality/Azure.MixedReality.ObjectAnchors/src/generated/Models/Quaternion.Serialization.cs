@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.MixedReality.ObjectAnchors.Models
 {
-    internal partial class Quaternion : IUtf8JsonSerializable
+    public partial class Quaternion : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

@@ -34,14 +34,14 @@ namespace Azure.MixedReality.ObjectAnchors
         /// <returns><c>true</c> if this instance is valid; otherwise, <c>false</c>.</returns>
         internal bool IsValid(out string invalidMessage)
         {
-            invalidMessage = null;
+            invalidMessage = string.Empty;
 
-            if (!this.Gravity.IsNormalized())
+            if (this.Gravity == null || !this.Gravity.Value.IsNormalized())
             {
                 invalidMessage = $"The value for {nameof(AssetConfiguration.Gravity)} must be normalized.";
             }
 
-            return invalidMessage is null;
+            return invalidMessage.Length == 0;
         }
     }
 }

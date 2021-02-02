@@ -80,26 +80,55 @@ namespace Azure.MixedReality.ObjectAnchors
         /// <remarks>
         /// Required for mocking.
         /// </remarks>
-        protected SpatialAnchorsClient()
+        protected ObjectAnchorsClient()
         {
         }
 
-        public virtual void CreateJob(IngestionJobRequest request, CancellationToken cancellationToken = default)
+        public virtual Response<IngestionProperties> CreateJob(IngestionJobRequest request, CancellationToken cancellationToken = default)
         {
-            return _ingestionJobRestClient.Create(_account.AccountId, request.JobId);
+            IngestionProperties properties = new IngestionProperties
+            {
+                AssetFileType = request.AssetFileType,
+                IngestionConfiguration = request.AssetConfigurationValues,
+                InputAssetUri = request.InputFilePath
+            };
+            return _ingestionJobRestClient.Create(_account.AccountId, request.JobId, cancellationToken: cancellationToken);
         }
 
-        public virtual async Task<> CreateJobAsync(IngestionJobRequest request, CancellationToken cancellationToken = default) { }
+        public virtual async Task<Response<IngestionProperties>> CreateJobAsync(IngestionJobRequest request, CancellationToken cancellationToken = default)
+        {
+            IngestionProperties properties = new IngestionProperties
+            {
+                AssetFileType = request.AssetFileType,
+                IngestionConfiguration = request.AssetConfigurationValues,
+                InputAssetUri = request.InputFilePath
+            };
+            return await _ingestionJobRestClient.CreateAsync(_account.AccountId, request.JobId, cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
 
-        public virtual void GetJob(CancellationToken cancellationToken = default) { }
+        public virtual Response<IngestionProperties> GetJob(Guid JobId, CancellationToken cancellationToken = default)
+        {
+            return _ingestionJobRestClient.Get(_account.AccountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken);
+        }
 
-        public virtual async Task<> GetJobAsync(CancellationToken cancellationToken = default) { }
+        public virtual async Task<Response<IngestionProperties>> GetJobAsync(Guid JobId, CancellationToken cancellationToken = default)
+        {
+            return await _ingestionJobRestClient.GetAsync(_account.AccountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
 
-        public virtual void GetUploadUri(CancellationToken cancellationToken = default) { }
+        public virtual Response<Uri> GetUploadUri(CancellationToken cancellationToken = default)
+        {
+            ResponseWithHeaders<UploadLocation, BlobUploadEndpointGetHeaders> response =
+                _getBlobUploadEndpointRestClient.Get(_account.AccountId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken);
+            return ResponseWithHeaders.FromValue(new Uri(response.Value.InputAssetUri), response.Headers, response.GetRawResponse());
+        }
 
-        public virtual async Task<> GetUploadUriAsync(CancellationToken cancellationToken = default) { }
-
-        public virtual Response<IngestionProperties> GetIngestionJob(CancellationToken cancellationToken = default) { }
+        public virtual async Task<Response<Uri>> GetUploadUriAsync(CancellationToken cancellationToken = default)
+        {
+            ResponseWithHeaders<UploadLocation, BlobUploadEndpointGetHeaders> response =
+                await _getBlobUploadEndpointRestClient.GetAsync(_account.AccountId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken).ConfigureAwait(false);
+            return ResponseWithHeaders.FromValue(new Uri(response.Value.InputAssetUri), response.Headers, response.GetRawResponse());
+        }
 
         private static string GetDefaultScope(Uri uri)
             => $"{uri.GetComponents(UriComponents.SchemeAndServer, UriFormat.SafeUnescaped)}/.default";
@@ -111,7 +140,7 @@ namespace Azure.MixedReality.ObjectAnchors
         {
             Argument.AssertNotNullOrWhiteSpace(accountDomain, nameof(accountDomain));
 
-            if (!Uri.TryCreate($"https://{accountDomain}", UriKind.Absolute, out Uri result))
+            if (!Uri.TryCreate($"https://aoa.{accountDomain}", UriKind.Absolute, out Uri result))
             {
                 throw new ArgumentException("The value could not be used to construct a valid endpoint.", nameof(accountDomain));
             }

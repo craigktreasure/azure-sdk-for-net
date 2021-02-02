@@ -8,29 +8,7 @@
 namespace Azure.MixedReality.ObjectAnchors.Models
 {
     /// <summary> The Vector4. </summary>
-    internal partial class Vector4
+    public partial class Vector4
     {
-        /// <summary> Initializes a new instance of Vector4. </summary>
-        public Vector4()
-        {
-        }
-
-        /// <summary> Initializes a new instance of Vector4. </summary>
-        /// <param name="x"> . </param>
-        /// <param name="y"> . </param>
-        /// <param name="z"> . </param>
-        /// <param name="w"> . </param>
-        internal Vector4(float? x, float? y, float? z, float? w)
-        {
-            X = x;
-            Y = y;
-            Z = z;
-            W = w;
-        }
-
-        public float? X { get; set; }
-        public float? Y { get; set; }
-        public float? Z { get; set; }
-        public float? W { get; set; }
     }
 }

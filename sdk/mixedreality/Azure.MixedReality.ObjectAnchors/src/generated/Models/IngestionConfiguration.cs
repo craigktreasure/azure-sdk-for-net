@@ -14,30 +14,46 @@ namespace Azure.MixedReality.ObjectAnchors.Models
     /// <summary> Represents an ingestion configuration. </summary>
     public partial class IngestionConfiguration
     {
-
         /// <summary> Initializes a new instance of IngestionConfiguration. </summary>
-        /// <param name="generatedDimensions"> . </param>
-        /// <param name="generatedBoundingBoxCenter"> . </param>
-        /// <param name="generatedGravity"> . </param>
-        /// <param name="keyFrameIndexes"> Indices of Key Frames. </param>
-        /// <param name="gtTrajectory"> Ground truth trajectory. </param>
-        /// <param name="generatedPrincipalAxis"> . </param>
+        /// <param name="gravityWrapper"> . </param>
         /// <param name="scale"> Scale of transformation of asset units into meter space. </param>
-        /// <param name="generatedSupportingPlane"> . </param>
-        /// <param name="testTrajectory"> Test Trajectory. </param>
-        internal IngestionConfiguration(Vector3 generatedDimensions, Vector3 generatedBoundingBoxCenter, Vector3 generatedGravity, IList<int> keyFrameIndexes, IList<Pose> gtTrajectory, Quaternion generatedPrincipalAxis, float scale, Vector4 generatedSupportingPlane, IList<Pose> testTrajectory)
+        /// <exception cref="ArgumentNullException"> <paramref name="gravityWrapper"/> is null. </exception>
+        public IngestionConfiguration(Vector3 gravityWrapper, float scale)
         {
-            GeneratedDimensions = generatedDimensions;
-            GeneratedBoundingBoxCenter = generatedBoundingBoxCenter;
-            GeneratedGravity = generatedGravity;
-            KeyFrameIndexes = keyFrameIndexes;
-            GtTrajectory = gtTrajectory;
-            GeneratedPrincipalAxis = generatedPrincipalAxis;
+            if (gravityWrapper == null)
+            {
+                throw new ArgumentNullException(nameof(gravityWrapper));
+            }
+
+            GravityWrapper = gravityWrapper;
+            KeyFrameIndexes = new ChangeTrackingList<int>();
+            GtTrajectory = new ChangeTrackingList<Pose>();
             Scale = scale;
-            GeneratedSupportingPlane = generatedSupportingPlane;
-            TestTrajectory = testTrajectory;
+            TestTrajectory = new ChangeTrackingList<Pose>();
         }
 
+        /// <summary> Initializes a new instance of IngestionConfiguration. </summary>
+        /// <param name="dimensionsWrapper"> . </param>
+        /// <param name="boundingBoxCenterWrapper"> . </param>
+        /// <param name="gravityWrapper"> . </param>
+        /// <param name="keyFrameIndexes"> Indices of Key Frames. </param>
+        /// <param name="gtTrajectory"> Ground truth trajectory. </param>
+        /// <param name="principalAxisWrapper"> . </param>
+        /// <param name="scale"> Scale of transformation of asset units into meter space. </param>
+        /// <param name="supportingPlaneWrapper"> . </param>
+        /// <param name="testTrajectory"> Test Trajectory. </param>
+        internal IngestionConfiguration(Vector3 dimensionsWrapper, Vector3 boundingBoxCenterWrapper, Vector3 gravityWrapper, IList<int> keyFrameIndexes, IList<Pose> gtTrajectory, Quaternion principalAxisWrapper, float scale, Vector4 supportingPlaneWrapper, IList<Pose> testTrajectory)
+        {
+            DimensionsWrapper = dimensionsWrapper;
+            BoundingBoxCenterWrapper = boundingBoxCenterWrapper;
+            GravityWrapper = gravityWrapper;
+            KeyFrameIndexes = keyFrameIndexes;
+            GtTrajectory = gtTrajectory;
+            PrincipalAxisWrapper = principalAxisWrapper;
+            Scale = scale;
+            SupportingPlaneWrapper = supportingPlaneWrapper;
+            TestTrajectory = testTrajectory;
+        }
         /// <summary> Indices of Key Frames. </summary>
         public IList<int> KeyFrameIndexes { get; }
         /// <summary> Ground truth trajectory. </summary>

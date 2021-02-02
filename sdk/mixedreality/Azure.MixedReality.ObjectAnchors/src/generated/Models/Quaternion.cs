@@ -8,32 +8,7 @@
 namespace Azure.MixedReality.ObjectAnchors.Models
 {
     /// <summary> The Quaternion. </summary>
-    internal partial class Quaternion
+    public partial class Quaternion
     {
-        /// <summary> Initializes a new instance of Quaternion. </summary>
-        public Quaternion()
-        {
-        }
-
-        /// <summary> Initializes a new instance of Quaternion. </summary>
-        /// <param name="x"> . </param>
-        /// <param name="y"> . </param>
-        /// <param name="z"> . </param>
-        /// <param name="w"> . </param>
-        /// <param name="isIdentity"> . </param>
-        internal Quaternion(float? x, float? y, float? z, float? w, bool? isIdentity)
-        {
-            X = x;
-            Y = y;
-            Z = z;
-            W = w;
-            IsIdentity = isIdentity;
-        }
-
-        public float? X { get; set; }
-        public float? Y { get; set; }
-        public float? Z { get; set; }
-        public float? W { get; set; }
-        public bool? IsIdentity { get; }
     }
 }

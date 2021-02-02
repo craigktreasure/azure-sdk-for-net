@@ -10,24 +10,5 @@ namespace Azure.MixedReality.ObjectAnchors.Models
     /// <summary> The Vector3. </summary>
     internal partial class Vector3
     {
-        /// <summary> Initializes a new instance of Vector3. </summary>
-        public Vector3()
-        {
-        }
-
-        /// <summary> Initializes a new instance of Vector3. </summary>
-        /// <param name="x"> . </param>
-        /// <param name="y"> . </param>
-        /// <param name="z"> . </param>
-        internal Vector3(float? x, float? y, float? z)
-        {
-            X = x;
-            Y = y;
-            Z = z;
-        }
-
-        public float? X { get; set; }
-        public float? Y { get; set; }
-        public float? Z { get; set; }
     }
 }
