@@ -1,13 +1,10 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Microsoft">
-//   Copyright (c) Microsoft Corporation.  All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 namespace Azure.MixedReality.ObjectAnchors
 {
     using System;
     using Azure.MixedReality.ObjectAnchors.Models;
-    using Vector3 = System.Numerics.Vector3;
 
     /// <summary>
     /// An object representing asset configuration values.
@@ -19,7 +16,7 @@ namespace Azure.MixedReality.ObjectAnchors
         /// </summary>
         /// <param name="gravity">The asset gravity, which must be normalized.</param>
         /// <param name="scale">The asset scale.</param>
-        public AssetConfiguration(Vector3 gravity, float scale) : base(gravity.ToGeneratedVector3(), scale)
+        public AssetConfiguration(System.Numerics.Vector3 gravity, float scale) : base(new Vector3(gravity), scale)
         {
             if (!gravity.IsNormalized())
             {

@@ -54,14 +54,14 @@ namespace Azure.MixedReality.ObjectAnchors.Tests.Samples
 
             AssetConfiguration assetConfiguration = new AssetConfiguration(assetGravity, scale);
 
-            IngestionJobRequest ingestionJobRequest = new IngestionJobRequest(assetConfiguration, localFilePath);
+            IngestionJobCreationOptions ingestionJobRequest = new IngestionJobCreationOptions(assetConfiguration, uploadUri);
 
             var jobId = (await client.CreateJobAsync(ingestionJobRequest)).Value.JobId.Value;
 
             DateTime startTime = DateTime.UtcNow;
 
             bool hasSucceeded = false;
-            IngestionProperties ingestionProperties;
+            IngestionProperties ingestionProperties = null;
             while (hasSucceeded == false)
             {
                 if (DateTime.UtcNow - startTime > waitTimeout)

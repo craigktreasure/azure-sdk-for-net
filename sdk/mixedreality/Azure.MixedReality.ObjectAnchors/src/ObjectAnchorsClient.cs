@@ -1,8 +1,6 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright company="Microsoft">
-//   Copyright (c) Microsoft Corporation.  All rights reserved.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using System.Threading;
 using Azure.Core;
@@ -84,38 +82,67 @@ namespace Azure.MixedReality.ObjectAnchors
         {
         }
 
-        public virtual Response<IngestionProperties> CreateJob(IngestionJobRequest request, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Creates an Object Anchors ingestion job request.
+        /// </summary>
+        /// <param name="creationOptions">The ingestion job creation options</param>
+        /// <param name="cancellationToken">The cancellation toke</param>
+        /// <returns><see cref="Response{IngestionProperties}"/>.</returns>
+        public virtual Response<IngestionProperties> CreateJob(IngestionJobCreationOptions creationOptions, CancellationToken cancellationToken = default)
         {
             IngestionProperties properties = new IngestionProperties
             {
-                AssetFileType = request.AssetFileType,
-                IngestionConfiguration = request.AssetConfigurationValues,
-                InputAssetUri = request.InputFilePath
+                AssetFileType = creationOptions.AssetFileType,
+                IngestionConfiguration = creationOptions.AssetConfigurationValues,
+                InputAssetUri = creationOptions.InputFilePath
             };
-            return _ingestionJobRestClient.Create(_account.AccountId, request.JobId, cancellationToken: cancellationToken);
+            return _ingestionJobRestClient.Create(_account.AccountId, creationOptions.JobId, cancellationToken: cancellationToken);
         }
 
-        public virtual async Task<Response<IngestionProperties>> CreateJobAsync(IngestionJobRequest request, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Creates an Object Anchors ingestion job request.
+        /// </summary>
+        /// <param name="creationOptions">The ingestion job creation options</param>
+        /// <param name="cancellationToken">The cancellation toke</param>
+        /// <returns><see cref="Response{IngestionProperties}"/>.</returns>
+        public virtual async Task<Response<IngestionProperties>> CreateJobAsync(IngestionJobCreationOptions creationOptions, CancellationToken cancellationToken = default)
         {
             IngestionProperties properties = new IngestionProperties
             {
-                AssetFileType = request.AssetFileType,
-                IngestionConfiguration = request.AssetConfigurationValues,
-                InputAssetUri = request.InputFilePath
+                AssetFileType = creationOptions.AssetFileType,
+                IngestionConfiguration = creationOptions.AssetConfigurationValues,
+                InputAssetUri = creationOptions.InputFilePath
             };
-            return await _ingestionJobRestClient.CreateAsync(_account.AccountId, request.JobId, cancellationToken: cancellationToken).ConfigureAwait(false);
+            return await _ingestionJobRestClient.CreateAsync(_account.AccountId, creationOptions.JobId, cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Gets the status of an Object Anchors ingestion job
+        /// </summary>
+        /// <param name="JobId">The ingestion job's ID</param>
+        /// <param name="cancellationToken">The cancellation token</param>
+        /// <returns><see cref="Response{IngestionProperties}"/>.</returns>
         public virtual Response<IngestionProperties> GetJob(Guid JobId, CancellationToken cancellationToken = default)
         {
             return _ingestionJobRestClient.Get(_account.AccountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken);
         }
 
+        /// <summary>
+        /// Gets the status of an Object Anchors ingestion job
+        /// </summary>
+        /// <param name="JobId">The ingestion job's ID</param>
+        /// <param name="cancellationToken">The cancellation token</param>
+        /// <returns><see cref="Response{IngestionProperties}"/>.</returns>
         public virtual async Task<Response<IngestionProperties>> GetJobAsync(Guid JobId, CancellationToken cancellationToken = default)
         {
             return await _ingestionJobRestClient.GetAsync(_account.AccountId, JobId, xMrcCv: GenerateCv(), cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Retrieves an upload URI intended to house the model to be ingested
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token</param>
+        /// <returns><see cref="Response{Uri}"/>.</returns>
         public virtual Response<Uri> GetUploadUri(CancellationToken cancellationToken = default)
         {
             ResponseWithHeaders<UploadLocation, BlobUploadEndpointGetHeaders> response =
@@ -123,6 +150,11 @@ namespace Azure.MixedReality.ObjectAnchors
             return ResponseWithHeaders.FromValue(new Uri(response.Value.InputAssetUri), response.Headers, response.GetRawResponse());
         }
 
+        /// <summary>
+        /// Retrieves an upload URI intended to house the model to be ingested
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token</param>
+        /// <returns><see cref="Response{Uri}"/>.</returns>
         public virtual async Task<Response<Uri>> GetUploadUriAsync(CancellationToken cancellationToken = default)
         {
             ResponseWithHeaders<UploadLocation, BlobUploadEndpointGetHeaders> response =

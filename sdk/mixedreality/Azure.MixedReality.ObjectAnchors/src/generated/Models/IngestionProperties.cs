@@ -21,21 +21,21 @@ namespace Azure.MixedReality.ObjectAnchors.Models
         /// <param name="clientErrorDetails"> Information about the cause of a ClientError JobStatus. </param>
         /// <param name="serverErrorDetails"> Information about the cause of a ServerError JobStatus. </param>
         /// <param name="jobId"> Identifier for the AOA Ingestion Job. </param>
-        /// <param name="outputModelUri"> The URI for downloading the generated AOA Model. </param>
+        /// <param name="outputModelUriString"> The URI for downloading the generated AOA Model. </param>
         /// <param name="jobStatus"> . </param>
         /// <param name="assetFileType"> The file type of the original 3D asset. Examples include: &quot;ply&quot;, &quot;obj&quot;, &quot;fbx&quot;, &quot;glb&quot;, &quot;gltf&quot;, etc. </param>
-        /// <param name="inputAssetUri"> The Uri to the Asset to be ingested by the AOA Ingestion Service. This asset needs to have been uploaded to the service using an endpoint provided from a call to the GetUploadUri API. </param>
+        /// <param name="inputAssetUriString"> The Uri to the Asset to be ingested by the AOA Ingestion Service. This asset needs to have been uploaded to the service using an endpoint provided from a call to the GetUploadUri API. </param>
         /// <param name="accountId"> Identifier for the Account owning the AOA Ingestion Job. </param>
         /// <param name="ingestionConfiguration"> Represents an ingestion configuration. </param>
-        internal IngestionProperties(string clientErrorDetails, string serverErrorDetails, Guid? jobId, string outputModelUri, JobStatus? jobStatus, string assetFileType, string inputAssetUri, Guid? accountId, IngestionConfiguration ingestionConfiguration)
+        internal IngestionProperties(string clientErrorDetails, string serverErrorDetails, Guid? jobId, string outputModelUriString, JobStatus? jobStatus, string assetFileType, string inputAssetUriString, Guid? accountId, IngestionConfiguration ingestionConfiguration)
         {
             ClientErrorDetails = clientErrorDetails;
             ServerErrorDetails = serverErrorDetails;
             JobId = jobId;
-            OutputModelUri = outputModelUri;
+            OutputModelUriString = outputModelUriString;
             JobStatus = jobStatus;
             AssetFileType = assetFileType;
-            InputAssetUri = inputAssetUri;
+            InputAssetUriString = inputAssetUriString;
             AccountId = accountId;
             IngestionConfiguration = ingestionConfiguration;
         }
@@ -46,13 +46,8 @@ namespace Azure.MixedReality.ObjectAnchors.Models
         public string ServerErrorDetails { get; }
         /// <summary> Identifier for the AOA Ingestion Job. </summary>
         public Guid? JobId { get; }
-        /// <summary> The URI for downloading the generated AOA Model. </summary>
-        public string OutputModelUri { get; }
-        public JobStatus? JobStatus { get; set; }
         /// <summary> The file type of the original 3D asset. Examples include: &quot;ply&quot;, &quot;obj&quot;, &quot;fbx&quot;, &quot;glb&quot;, &quot;gltf&quot;, etc. </summary>
         public string AssetFileType { get; set; }
-        /// <summary> The Uri to the Asset to be ingested by the AOA Ingestion Service. This asset needs to have been uploaded to the service using an endpoint provided from a call to the GetUploadUri API. </summary>
-        public string InputAssetUri { get; set; }
         /// <summary> Identifier for the Account owning the AOA Ingestion Job. </summary>
         public Guid? AccountId { get; }
         /// <summary> Represents an ingestion configuration. </summary>

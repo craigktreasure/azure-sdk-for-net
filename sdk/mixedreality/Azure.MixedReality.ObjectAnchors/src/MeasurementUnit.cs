@@ -1,6 +1,10 @@
-﻿namespace Azure.MixedReality.ObjectAnchors
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Azure.MixedReality.ObjectAnchors
 {
-    public enum Unit
+    /// <summary> Represents the measurement of a single distance unit in an asset. </summary>
+    public enum MeasurementUnit
     {
         /// <summary>
         /// Unsupported.

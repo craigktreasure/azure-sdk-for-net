@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.MixedReality.ObjectAnchors.Models
 {
-    public partial class UploadLocation
+    internal partial class UploadLocation
     {
         internal static UploadLocation DeserializeUploadLocation(JsonElement element)
         {

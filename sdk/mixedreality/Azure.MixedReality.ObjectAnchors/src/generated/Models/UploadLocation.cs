@@ -10,7 +10,7 @@ using System;
 namespace Azure.MixedReality.ObjectAnchors.Models
 {
     /// <summary> The UploadLocation. </summary>
-    public partial class UploadLocation
+    internal partial class UploadLocation
     {
         /// <summary> Initializes a new instance of UploadLocation. </summary>
         /// <param name="inputAssetUri"> The blob upload URI where a model should be uploaded to the service for ingestion. </param>

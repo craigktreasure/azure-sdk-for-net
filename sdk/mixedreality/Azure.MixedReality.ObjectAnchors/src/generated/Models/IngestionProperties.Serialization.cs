@@ -26,10 +26,10 @@ namespace Azure.MixedReality.ObjectAnchors.Models
                 writer.WritePropertyName("assetFileType");
                 writer.WriteStringValue(AssetFileType);
             }
-            if (Optional.IsDefined(InputAssetUri))
+            if (Optional.IsDefined(InputAssetUriString))
             {
                 writer.WritePropertyName("inputAssetUri");
-                writer.WriteStringValue(InputAssetUri);
+                writer.WriteStringValue(InputAssetUriString);
             }
             if (Optional.IsDefined(IngestionConfiguration))
             {

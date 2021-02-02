@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.MixedReality.ObjectAnchors.Models
 {
-    /// <summary> The Quaternion. </summary>
-    internal partial class Quaternion
+    /// <summary> The UploadLocation. </summary>
+    internal partial class UploadLocation
     {
     }
 }

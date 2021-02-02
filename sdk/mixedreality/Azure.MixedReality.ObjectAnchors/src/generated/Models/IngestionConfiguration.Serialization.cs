@@ -79,11 +79,11 @@ namespace Azure.MixedReality.ObjectAnchors.Models
             Optional<Vector3> boundingBoxCenter = default;
             Vector3 gravity = default;
             Optional<IList<int>> keyFrameIndexes = default;
-            Optional<IList<Pose>> gtTrajectory = default;
+            Optional<IList<TrajectoryPose>> gtTrajectory = default;
             Optional<Quaternion> principalAxis = default;
             float scale = default;
             Optional<Vector4> supportingPlane = default;
-            Optional<IList<Pose>> testTrajectory = default;
+            Optional<IList<TrajectoryPose>> testTrajectory = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dimensions"))
@@ -133,10 +133,10 @@ namespace Azure.MixedReality.ObjectAnchors.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Pose> array = new List<Pose>();
+                    List<TrajectoryPose> array = new List<TrajectoryPose>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Pose.DeserializePose(item));
+                        array.Add(TrajectoryPose.DeserializeTrajectoryPose(item));
                     }
                     gtTrajectory = array;
                     continue;
@@ -173,10 +173,10 @@ namespace Azure.MixedReality.ObjectAnchors.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Pose> array = new List<Pose>();
+                    List<TrajectoryPose> array = new List<TrajectoryPose>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Pose.DeserializePose(item));
+                        array.Add(TrajectoryPose.DeserializeTrajectoryPose(item));
                     }
                     testTrajectory = array;
                     continue;

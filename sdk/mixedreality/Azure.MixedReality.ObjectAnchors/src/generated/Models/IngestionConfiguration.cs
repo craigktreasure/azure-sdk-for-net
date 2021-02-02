@@ -14,23 +14,6 @@ namespace Azure.MixedReality.ObjectAnchors.Models
     /// <summary> Represents an ingestion configuration. </summary>
     public partial class IngestionConfiguration
     {
-        /// <summary> Initializes a new instance of IngestionConfiguration. </summary>
-        /// <param name="gravityWrapper"> . </param>
-        /// <param name="scale"> Scale of transformation of asset units into meter space. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gravityWrapper"/> is null. </exception>
-        public IngestionConfiguration(Vector3 gravityWrapper, float scale)
-        {
-            if (gravityWrapper == null)
-            {
-                throw new ArgumentNullException(nameof(gravityWrapper));
-            }
-
-            GravityWrapper = gravityWrapper;
-            KeyFrameIndexes = new ChangeTrackingList<int>();
-            GtTrajectory = new ChangeTrackingList<Pose>();
-            Scale = scale;
-            TestTrajectory = new ChangeTrackingList<Pose>();
-        }
 
         /// <summary> Initializes a new instance of IngestionConfiguration. </summary>
         /// <param name="dimensionsWrapper"> . </param>
@@ -42,7 +25,7 @@ namespace Azure.MixedReality.ObjectAnchors.Models
         /// <param name="scale"> Scale of transformation of asset units into meter space. </param>
         /// <param name="supportingPlaneWrapper"> . </param>
         /// <param name="testTrajectory"> Test Trajectory. </param>
-        internal IngestionConfiguration(Vector3 dimensionsWrapper, Vector3 boundingBoxCenterWrapper, Vector3 gravityWrapper, IList<int> keyFrameIndexes, IList<Pose> gtTrajectory, Quaternion principalAxisWrapper, float scale, Vector4 supportingPlaneWrapper, IList<Pose> testTrajectory)
+        internal IngestionConfiguration(Vector3 dimensionsWrapper, Vector3 boundingBoxCenterWrapper, Vector3 gravityWrapper, IList<int> keyFrameIndexes, IList<TrajectoryPose> gtTrajectory, Quaternion principalAxisWrapper, float scale, Vector4 supportingPlaneWrapper, IList<TrajectoryPose> testTrajectory)
         {
             DimensionsWrapper = dimensionsWrapper;
             BoundingBoxCenterWrapper = boundingBoxCenterWrapper;
@@ -57,10 +40,10 @@ namespace Azure.MixedReality.ObjectAnchors.Models
         /// <summary> Indices of Key Frames. </summary>
         public IList<int> KeyFrameIndexes { get; }
         /// <summary> Ground truth trajectory. </summary>
-        public IList<Pose> GtTrajectory { get; }
+        public IList<TrajectoryPose> GtTrajectory { get; }
         /// <summary> Scale of transformation of asset units into meter space. </summary>
         public float Scale { get; set; }
         /// <summary> Test Trajectory. </summary>
-        public IList<Pose> TestTrajectory { get; }
+        public IList<TrajectoryPose> TestTrajectory { get; }
     }
 }

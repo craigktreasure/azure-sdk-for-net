@@ -14,15 +14,37 @@ namespace Azure.MixedReality.ObjectAnchors.Models
     /// <summary> Represents an ingestion configuration. </summary>
     public partial class IngestionConfiguration
     {
+        /// <summary>
+        /// An ingestion model's configuration
+        /// </summary>
+        /// <param name="gravity">Gravity vector with respect to object's nominal position.</param>
+        /// <param name="scale">Scale of transformation of asset units into meter space.</param>
+        public IngestionConfiguration(System.Numerics.Vector3 gravity, float scale) : this(new Vector3(gravity), scale) { }
+
+        internal IngestionConfiguration(Vector3 gravityWrapper, float scale)
+        {
+            if (gravityWrapper == null)
+            {
+                throw new ArgumentNullException(nameof(gravityWrapper));
+            }
+
+            GravityWrapper = gravityWrapper;
+            KeyFrameIndexes = new ChangeTrackingList<int>();
+            GtTrajectory = new ChangeTrackingList<TrajectoryPose>();
+            Scale = scale;
+            TestTrajectory = new ChangeTrackingList<TrajectoryPose>();
+        }
+
+        /// <summary> Dimensions of the asset. </summary>
         public System.Numerics.Vector3? Dimensions { get => DimensionsWrapper.data; set => DimensionsWrapper.data = value; }
-
+        /// <summary> BoundingBoxCenter of the asset. </summary>
         public System.Numerics.Vector3? BoundingBoxCenter { get => BoundingBoxCenterWrapper.data; set => BoundingBoxCenterWrapper.data = value; }
-
+        /// <summary> Gravity vector with respect to object's nominal position. </summary>
         public System.Numerics.Vector3? Gravity { get => GravityWrapper.data; set => GravityWrapper.data = value; }
-
+        /// <summary> Orientation of model's bounding box. </summary>
         public System.Numerics.Quaternion? PrincipalAxis { get => PrincipalAxisWrapper.data; set => PrincipalAxisWrapper.data = value; }
 
-        /// <summary> Scale of transformation of asset units into meter space. </summary>
+        /// <summary> Definition of supporting plane. </summary>
         public System.Numerics.Vector4? SupportingPlane { get => SupportingPlaneWrapper.data; set => SupportingPlaneWrapper.data = value; }
 
 

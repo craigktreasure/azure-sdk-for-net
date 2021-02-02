@@ -8,13 +8,18 @@
 namespace Azure.MixedReality.ObjectAnchors.Models
 {
     /// <summary> The Quaternion. </summary>
-    public partial class Quaternion
+    internal partial class Quaternion
     {
         internal System.Numerics.Quaternion? data = null;
 
         /// <summary> Initializes a new instance of Quaternion. </summary>
-        public Quaternion()
+        internal Quaternion()
         {
+        }
+
+        internal Quaternion(System.Numerics.Quaternion quaternion)
+        {
+            data = quaternion;
         }
 
         /// <summary> Initializes a new instance of Quaternion. </summary>

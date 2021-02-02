@@ -10,25 +10,25 @@ using Azure.Core;
 
 namespace Azure.MixedReality.ObjectAnchors.Models
 {
-    public partial class Pose : IUtf8JsonSerializable
+    public partial class TrajectoryPose : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Rotation))
+            if (Optional.IsDefined(RotationWrapper))
             {
                 writer.WritePropertyName("rotation");
-                writer.WriteObjectValue(Rotation);
+                writer.WriteObjectValue(RotationWrapper);
             }
-            if (Optional.IsDefined(Translation))
+            if (Optional.IsDefined(TranslationWrapper))
             {
                 writer.WritePropertyName("translation");
-                writer.WriteObjectValue(Translation);
+                writer.WriteObjectValue(TranslationWrapper);
             }
             writer.WriteEndObject();
         }
 
-        internal static Pose DeserializePose(JsonElement element)
+        internal static TrajectoryPose DeserializeTrajectoryPose(JsonElement element)
         {
             Optional<Quaternion> rotation = default;
             Optional<Vector3> translation = default;
@@ -55,7 +55,7 @@ namespace Azure.MixedReality.ObjectAnchors.Models
                     continue;
                 }
             }
-            return new Pose(rotation.Value, translation.Value);
+            return new TrajectoryPose(rotation.Value, translation.Value);
         }
     }
 }

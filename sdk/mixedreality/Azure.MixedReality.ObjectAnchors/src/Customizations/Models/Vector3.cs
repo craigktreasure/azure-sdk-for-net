@@ -13,8 +13,13 @@ namespace Azure.MixedReality.ObjectAnchors.Models
         internal System.Numerics.Vector3? data = null;
 
         /// <summary> Initializes a new instance of Vector3. </summary>
-        public Vector3()
+        internal Vector3()
         {
+        }
+
+        internal Vector3(System.Numerics.Vector3 vector)
+        {
+            data = vector;
         }
 
         /// <summary> Initializes a new instance of Vector3. </summary>
